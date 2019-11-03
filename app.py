@@ -52,7 +52,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1('Final Project - MLB Pitchers Seasonal Stats'),
     html.H2('Assumptions -- Year: 2000-2018, Games Started > 20'),
-    html.H3('Choose a continuous variable for the Top 10 pitchers of each statistic:'),
+    html.H3('Choose a continuous variable:'),
     dcc.Dropdown(
         id='dropdown',
         options=[{'label': i, 'value': i} for i in variables_list],
