@@ -18,14 +18,16 @@ color1 = '#000089'
 
 ###### Import a dataframe #######
 all = pd.read_csv(filename)
-recent = all[all['yearID']>1999]
-exp = recent[recent['GS']>20]
 
 ###### Make unique IDs for duplicate player names, years, and teams ######
-exp['yearID_string'] = exp['yearID'].astype(str)
-exp['playerID'] = exp.apply(lambda x: x['playerID'][:-2], axis = 1)
-exp['name_year_team'] = exp[['playerID', 'yearID_string','teamID']].apply(lambda x: '-'.join(x), axis=1)
-exp.drop_duplicates(['name_year_team'], keep='last', inplace=True)
+all['yearID_string'] = all['yearID'].astype(str)
+all['playerID'] = all.apply(lambda x: x['playerID'][:-2], axis = 1)
+all['name_year_team'] = all[['playerID', 'yearID_string','teamID']].apply(lambda x: '-'.join(x), axis=1)
+all.drop_duplicates(['name_year_team'], keep='last', inplace=True)
+
+###### Recent Players since 2000 and started over 20 games ######
+recent = all[all['yearID']>1999]
+exp = recent[recent['GS']>20]
 
 ###### Shorten amount of statistics to be considered ######
 pitchers = exp[['playerID', 'yearID', 'teamID', 'name_year_team', 'W', 'L', 'H', 'ER', 'SO', 'BAOpp', 'ERA']]
