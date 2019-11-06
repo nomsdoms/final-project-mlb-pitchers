@@ -15,6 +15,7 @@ sourceurl = 'https://github.com/chadwickbureau/baseballdatabank/'
 githublink = 'https://github.com/nomsdoms/final-project-mlb-pitchers'
 filename = 'Pitching.csv'
 color1 = '#000089'
+color2 = '#cd0001'
 
 ###### Import a dataframe #######
 all = pd.read_csv(filename)
@@ -52,7 +53,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1('Final Project - MLB Pitchers Seasonal Stats'),
     html.H2('Assumptions -- Year: 2000-2018, Games Started > 20'),
-    html.H3('Choose a continuous variable:'),
+    html.H3('Choose a statistic:'),
     dcc.Dropdown(
         id='dropdown',
         options=[{'label': i, 'value': i} for i in variables_list],
@@ -70,28 +71,28 @@ app.layout = html.Div(children=[
 @app.callback(dash.dependencies.Output('display-value', 'figure'),
               [dash.dependencies.Input('dropdown', 'value')])
 def display_value(continuous_var):
-# Change ascending vs descending based on statistic
-    # if continuous_var == "Losses":
-    #     sort_this_way = True
-    # elif continuous_var == "Hits" or "Earned Runs" or "Earned Runs Average" or "Opponent Batting Average":
-    #     sort_this_way = True
-    # elif continuous_var == "Wins" or "Strikeouts":
-    #     sort_this_way = False
-    # else:
-    #     sort_this_way = False
-     #Create a grouped bar chart
-    mydata = go.Bar(
+    # Create a grouped bar chart
+    mydata1 = go.Bar(
         x=list(pitchers.sort_values(continuous_var, ascending = False).head(10)['name_year_team']),
         y=list(pitchers.sort_values(continuous_var, ascending = False).head(10)[continuous_var]),
-        marker=dict(color=color1)
+        marker=dict(color=color1),
+        name='Highest',
     )
+
+    mydata2 = go.Bar(
+        x=list(pitchers.sort_values(continuous_var, ascending = True).head(10)['name_year_team']),
+        y=list(pitchers.sort_values(continuous_var, ascending = True).head(10)[continuous_var]),
+        marker=dict(color=color2),
+        name='Lowest',
+    )
+
     mylayout = go.Layout(
-    title='Highest 10 {} pitched in a season from 2000 to 2018'.format(str(continuous_var)),
+    title='Highest and lowest 10 seasonal {} by a pitcher from 2000 to 2018'.format(str(continuous_var)),
     xaxis = dict(title = 'Pitcher-Year-Team'), # x-axis label
     yaxis = dict(title = str(continuous_var)), # y-axis label
     )
 
-    fig = go.Figure(data=[mydata], layout=mylayout)
+    fig = go.Figure(data=[mydata1, mydata2], layout=mylayout)
     return fig
 
 ############ Deploy / Run the app
