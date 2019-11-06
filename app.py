@@ -87,7 +87,7 @@ def display_value(continuous_var):
     )
 
     mylayout = go.Layout(
-    title='Highest and lowest 10 seasonal {} by a pitcher from 2000 to 2018'.format(str(continuous_var)),
+    title='Highest and lowest 10 seasonal {} by a pitcher from 2000 to 2018'.format(str.lower(continuous_var)),
     xaxis = dict(title = 'Pitcher-Year-Team'), # x-axis label
     yaxis = dict(title = str(continuous_var)), # y-axis label
     )
