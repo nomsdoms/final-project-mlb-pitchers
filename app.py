@@ -11,7 +11,7 @@ from plotly.graph_objs import *
 ########### Define a few variables ######
 
 tabtitle = 'MLB Pitchers'
-sourceurl = 'https://github.com/chadwickbureau/baseballdatabank/'
+sourceurl = 'http://www.seanlahman.com/baseball-archive/statistics/'
 githublink = 'https://github.com/nomsdoms/final-project-mlb-pitchers'
 filename = 'Pitching.csv'
 color1 = '#000089'
